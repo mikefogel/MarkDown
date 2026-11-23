@@ -45,16 +45,16 @@ body[data-mode^="print"] .doc-path { display: block; }
 body[data-mode^="print"] a[href] { background: var(--hl); border-radius: 3px; padding: 0 2px; }
 
 @page { margin: 18mm 16mm; }
+/* Druck: immer heller Grund mit dunklem Text (keine schwarzen Seiten); Link-Markierung in Gelb bleibt erhalten */
 @media print {
   html, body { background: #fff !important; color: #000 !important; }
-  html[data-theme="dark"] { --fg: #000; --bg: #fff; --muted: #444; --border: #ccc; --code-bg: #f4f4f4; --link: #0645ad; --hl: #fff3a3; }
   .markdown-body { max-width: none; padding: 0; }
   pre, table, img, svg, .mermaid, blockquote { break-inside: avoid; }
   h1, h2, h3, h4 { break-after: avoid; }
   pre { white-space: pre-wrap; overflow: visible; }
   .doc-section { break-before: page; margin-top: 0; }
   .print-cover { break-after: page; }
-  a[href] { background: var(--hl); color: var(--link); text-decoration: underline; padding: 0 2px; border-radius: 2px; }
+  a[href] { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: var(--hl); color: var(--link); text-decoration: underline; padding: 0 2px; border-radius: 2px; }
   a[data-target]:not([data-target=""])::after { content: " [" attr(data-target) "]"; font-size: .8em; color: var(--muted); word-break: break-all; }
   a.broken-link { background: none; color: #cf222e; }
 }

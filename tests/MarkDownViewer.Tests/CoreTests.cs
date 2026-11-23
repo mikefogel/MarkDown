@@ -149,6 +149,31 @@ public class EngineTests
     }
 }
 
+public class PrintStyleTests
+{
+    [Theory]
+    [InlineData(ViewMode.PrintSingle)]
+    [InlineData(ViewMode.PrintTree)]
+    public void Print_views_are_always_light_even_if_dark_requested(ViewMode mode)
+    {
+        using var d = new TestDir();
+        var f = d.Write("a.md", "# T\n\n```csharp\nint x;\n```");
+        var html = new MarkdownEngine().RenderPage(f, new RenderOptions(mode, "dark", 0, "/t/a/", "N", p => p));
+        Assert.Contains("data-theme=\"light\"", html);
+        Assert.Contains("hljs-light.css", html);
+        Assert.DoesNotContain("hljs-dark.css", html);
+    }
+
+    [Fact]
+    public void Normal_view_keeps_requested_dark_theme()
+    {
+        using var d = new TestDir();
+        var f = d.Write("a.md", "# T");
+        var html = new MarkdownEngine().RenderPage(f, new RenderOptions(ViewMode.Normal, "dark", 0, "/t/a/", "N", p => p));
+        Assert.Contains("data-theme=\"dark\"", html);
+    }
+}
+
 public class RootRelativeTests
 {
     [Fact]

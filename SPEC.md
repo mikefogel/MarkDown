@@ -50,10 +50,11 @@ Ein schneller, zuverlässiger Desktop-Viewer für Markdown-Dokumentationen, die 
 
 ### 6. Drucken / PDF
 - Button „Drucken“ (`Strg+P`) öffnet Dialog mit Auswahl:
-  - **Nur aktuelles Dokument**: Links gelb hervorgehoben; auf Papier steht das Linkziel in Klammern dahinter
+  - **Nur aktuelles Dokument**: Links gelb hinterlegt; auf Papier steht das Linkziel in Klammern dahinter
   - **Gesamter Baum**: Deckblatt mit Inhaltsverzeichnis, dann alle per Link nach unten erreichbaren Dokumente in Lesereihenfolge, jedes einmal, je Dokument neue Seite; interne Links zeigen auf den jeweiligen Abschnitt
 - Danach öffnet sich der Druckdialog des Systems (dort auch „In Datei drucken“/PDF)
 - Die Druckansicht ist ein Verlaufseintrag; „Zurück“ führt zum Dokument
+- **Nie schwarze Seiten** (Toner-/Tintensparend): Die Druckansicht rendert stets im hellen Theme mit weißem Grund und dunklem Text, auch wenn die App im Dunkel-Theme läuft. Die gelbe Link-Markierung bleibt erhalten
 - Print-CSS: Seitenumbrüche vor Kapiteln, Diagramme/Bilder/Tabellen werden nicht zerschnitten
 
 ### 7. Komfort

@@ -75,6 +75,8 @@ public sealed partial class MarkdownEngine
     public string RenderPage(string path, RenderOptions o)
     {
         path = Path.GetFullPath(path);
+        // Druckansichten sind immer hell (weißer Grund, keine schwarzen Seiten), unabhängig vom gewählten Theme
+        if (o.Mode != ViewMode.Normal) o = o with { Theme = "light" };
         string body, title;
         if (o.Mode == ViewMode.PrintTree)
         {
