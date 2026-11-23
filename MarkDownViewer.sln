@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CD2FC11B-67CF-4E15-B80B-799879F658BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkDownViewer", "src\MarkDownViewer\MarkDownViewer.csproj", "{956F6EB6-FFC5-4719-86BB-A2232C9C98CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{711E5369-7D8F-4BA3-8F75-AE1DE0CBA3F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkDownViewer.Tests", "tests\MarkDownViewer.Tests\MarkDownViewer.Tests.csproj", "{45392BD8-28A3-4D9E-B669-9FE822215DD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{956F6EB6-FFC5-4719-86BB-A2232C9C98CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{956F6EB6-FFC5-4719-86BB-A2232C9C98CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{956F6EB6-FFC5-4719-86BB-A2232C9C98CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{956F6EB6-FFC5-4719-86BB-A2232C9C98CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45392BD8-28A3-4D9E-B669-9FE822215DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45392BD8-28A3-4D9E-B669-9FE822215DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45392BD8-28A3-4D9E-B669-9FE822215DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45392BD8-28A3-4D9E-B669-9FE822215DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{956F6EB6-FFC5-4719-86BB-A2232C9C98CF} = {CD2FC11B-67CF-4E15-B80B-799879F658BB}
+		{45392BD8-28A3-4D9E-B669-9FE822215DD1} = {711E5369-7D8F-4BA3-8F75-AE1DE0CBA3F7}
+	EndGlobalSection
+EndGlobal
