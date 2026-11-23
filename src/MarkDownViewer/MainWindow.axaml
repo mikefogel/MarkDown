@@ -1,6 +1,55 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         x:Class="MarkDownViewer.MainWindow"
-        Title="MarkDown Viewer" DragDrop.AllowDrop="True" Width="1100" Height="750">
-  <NativeWebView x:Name="Web" />
+        Title="MarkDown Viewer" Width="1240" Height="820" MinWidth="720" MinHeight="420"
+        DragDrop.AllowDrop="True">
+  <DockPanel>
+    <Border DockPanel.Dock="Top" Padding="8,6" BorderThickness="0,0,0,1"
+            BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}">
+      <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="6">
+        <Button x:Name="BackButton" Grid.Column="0" Content="◀ Zurück" IsEnabled="False" Click="OnBack" ToolTip.Tip="Alt+←" />
+        <Button x:Name="ForwardButton" Grid.Column="1" Content="Vor ▶" IsEnabled="False" Click="OnForward" ToolTip.Tip="Alt+→" />
+        <Button x:Name="SidebarButton" Grid.Column="2" Content="☰" Click="OnToggleSidebar" ToolTip.Tip="Seitenleiste" />
+        <TextBlock x:Name="PathText" Grid.Column="3" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                   Margin="8,0" Opacity="0.75" />
+        <TextBox x:Name="SearchBox" Grid.Column="4" Width="210" Watermark="Suchen (Strg+F)" KeyDown="OnSearchKeyDown" />
+        <Button Grid.Column="5" Content="▲" Click="OnFindPrev" ToolTip.Tip="Vorheriger Treffer" />
+        <Button Grid.Column="6" Content="▼" Click="OnFindNext" ToolTip.Tip="Nächster Treffer" />
+        <CheckBox x:Name="TreeSearchBox" Grid.Column="7" Content="Baum" ToolTip.Tip="Im gesamten Baum suchen" />
+        <Button Grid.Column="8" Content="A−" Click="OnZoomOut" ToolTip.Tip="Verkleinern (Strg+−)" />
+        <Button Grid.Column="9" Content="A+" Click="OnZoomIn" ToolTip.Tip="Vergrößern (Strg++)" />
+        <Button Grid.Column="10" Content="Hell/Dunkel" Click="OnToggleTheme" />
+        <Button Grid.Column="11" Content="Drucken" Classes="accent" Click="OnPrint" ToolTip.Tip="Strg+P" />
+      </Grid>
+    </Border>
+    <Grid x:Name="BodyGrid" ColumnDefinitions="300,Auto,*">
+      <TabControl x:Name="Sidebar" Grid.Column="0" FontSize="13">
+        <TabItem Header="Gliederung" FontSize="13">
+          <TreeView x:Name="OutlineTree" SelectionChanged="OnOutlineSelected" />
+        </TabItem>
+        <TabItem Header="Baum" FontSize="13">
+          <TreeView x:Name="DocTree" SelectionChanged="OnDocTreeSelected" />
+        </TabItem>
+        <TabItem x:Name="SearchTab" Header="Suche" FontSize="13">
+          <ListBox x:Name="SearchResults" SelectionChanged="OnSearchResultSelected" />
+        </TabItem>
+      </TabControl>
+      <GridSplitter x:Name="Splitter" Grid.Column="1" Width="5" />
+      <Grid Grid.Column="2">
+        <NativeWebView x:Name="Web" IsVisible="False" />
+        <Border x:Name="StartScreen" Padding="40">
+          <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="14" MaxWidth="560">
+            <TextBlock Text="MarkDown Viewer" FontSize="34" FontWeight="Bold" HorizontalAlignment="Center" />
+            <Border BorderThickness="2" CornerRadius="14" Padding="46,40"
+                    BorderBrush="{DynamicResource SystemControlForegroundBaseMediumBrush}">
+              <TextBlock Text="Markdown-Datei hierher ziehen" FontSize="20" HorizontalAlignment="Center" Opacity="0.8" />
+            </Border>
+            <TextBlock x:Name="RecentLabel" Text="Zuletzt geöffnet" FontWeight="SemiBold" Margin="0,12,0,0" />
+            <ListBox x:Name="RecentList" MaxHeight="220" SelectionChanged="OnRecentSelected" />
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Grid>
+  </DockPanel>
 </Window>

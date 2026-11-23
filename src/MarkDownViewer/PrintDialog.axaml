@@ -1,0 +1,18 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="MarkDownViewer.PrintDialog"
+        Title="Drucken" SizeToContent="WidthAndHeight" CanResize="False"
+        WindowStartupLocation="CenterOwner">
+  <StackPanel Margin="24" Spacing="14" MinWidth="420">
+    <TextBlock Text="Was soll gedruckt werden?" FontSize="16" FontWeight="SemiBold" />
+    <RadioButton x:Name="SingleOption" GroupName="scope" IsChecked="True"
+                 Content="Nur das aktuelle Dokument (Links hervorgehoben)" />
+    <RadioButton x:Name="TreeOption" GroupName="scope" />
+    <TextBlock Text="Danach öffnet sich der Druckdialog des Systems. Dort kannst du auch als PDF speichern."
+               TextWrapping="Wrap" Opacity="0.7" />
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button Content="Abbrechen" Click="OnCancel" />
+      <Button Content="Drucken" Classes="accent" Click="OnPrint" IsDefault="True" />
+    </StackPanel>
+  </StackPanel>
+</Window>

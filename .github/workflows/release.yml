@@ -1,0 +1,83 @@
+name: Release
+# Gebaut wird ausschließlich hier in der Pipeline.
+#  - Tag "v*" (z. B. v1.0.0)  -> baut Windows + Linux und veröffentlicht ein GitHub-Release
+#  - Manuell (workflow_dispatch) -> baut nur die Pakete als Artefakte, ohne Release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - rid: win-x64
+            os: windows-latest
+          - rid: linux-x64
+            os: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Version bestimmen
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"; else echo "VERSION=0.0.0-dev" >> "$GITHUB_ENV"; fi
+
+      - name: Tests
+        run: dotnet test -c Release
+
+      - name: Publish (self-contained, ${{ matrix.rid }})
+        run: >
+          dotnet publish src/MarkDownViewer -c Release -r ${{ matrix.rid }} --self-contained true
+          -p:Version=${{ env.VERSION }} -p:DebugType=none -p:DebugSymbols=false
+          -o publish/MarkDownViewer
+
+      - name: Paket erstellen (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts | Out-Null
+          Compress-Archive -Path publish/MarkDownViewer -DestinationPath artifacts/markdown-viewer-${{ matrix.rid }}.zip
+
+      - name: Paket erstellen (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          mkdir -p artifacts
+          tar -C publish -czf artifacts/markdown-viewer-${{ matrix.rid }}.tar.gz MarkDownViewer
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: markdown-viewer-${{ matrix.rid }}
+          path: artifacts/*
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Prüfsummen
+        run: cd dist && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - name: GitHub-Release erstellen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh release create "${{ github.ref_name }}" dist/*
+          --repo "${{ github.repository }}"
+          --title "MarkDown Viewer ${{ github.ref_name }}"
+          --generate-notes
