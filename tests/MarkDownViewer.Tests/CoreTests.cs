@@ -157,7 +157,13 @@ public class RootRelativeTests
         using var d = new TestDir();
         var target = d.Write("ziel.md", "# Ziel");
         var img = d.Write("b/bild.png", "x");
-        var f = d.Write("a.md", $"[abs]({target})\n\n![]({img})\n\n![rel](b/bild.png)");
+        // Wurzel-relativ ("/pfad/datei.md"); unter Windows ohne Laufwerksbuchstaben (gleiches Laufwerk)
+        static string RootRel(string path)
+        {
+            var p = path.Replace('\\', '/');
+            return p.Length > 1 && p[1] == ':' ? p[2..] : p;
+        }
+        var f = d.Write("a.md", $"[abs]({RootRel(target)})\n\n![]({RootRel(img)})\n\n![rel](b/bild.png)");
         var html = new MarkdownEngine().RenderPage(f, new RenderOptions(ViewMode.Normal, "light", 0, "/t/a/", "N", p => "http://h/" + Path.GetFileName(p)));
         Assert.Contains("href=\"http://h/ziel.md\"", html);
         Assert.Contains("src=\"http://h/bild.png\"", html);
