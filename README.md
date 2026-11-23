@@ -88,7 +88,7 @@ Gedruckt wird **immer auf weißem Grund mit dunklem Text** – auch wenn du im d
 Danach öffnet sich der Druckdialog des Systems, dort geht auch **In Datei drucken (PDF)**.
 
 <p align="center">
-<img src="docs/screenshots/05-druckansicht-baum.png" alt="Druckansicht des gesamten Baums" width="780">
+<img src="docs/screenshots/05-druckansicht-baum-v2.png" alt="Druckansicht des gesamten Baums" width="780">
 </p>
 
 ### Weiteres
