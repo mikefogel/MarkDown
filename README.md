@@ -80,10 +80,10 @@ Mermaid und Code-Highlighting passen sich dem Theme an. Die Wahl wird gemerkt.
 <img src="docs/screenshots/06-druckdialog.png" alt="Druckdialog" width="460">
 </p>
 
-- **Nur das aktuelle Dokument:** Links sind gelb hinterlegt, auf Papier steht das Ziel in Klammern dahinter.
+- **Nur das aktuelle Dokument:** Links sind blau und unterstrichen, dahinter steht klein das Ziel in Klammern.
 - **Gesamter Baum:** Deckblatt mit Inhaltsverzeichnis, danach alle Dokumente nach unten in Lesereihenfolge – jedes einmal, jedes auf neuer Seite. Interne Links verweisen auf den jeweiligen Abschnitt.
 
-Gedruckt wird **immer auf weißem Grund mit dunklem Text** – auch wenn du im dunklen Theme liest. Es gibt also nie schwarz gefüllte Seiten, die Toner oder Tinte verbrauchen. Die gelbe Link-Markierung bleibt.
+Gedruckt wird **immer auf weißem Grund mit dunklem Text** – auch wenn du im dunklen Theme liest. Es gibt also nie schwarz gefüllte Seiten, die Toner oder Tinte verbrauchen. 
 
 Danach öffnet sich der Druckdialog des Systems, dort geht auch **In Datei drucken (PDF)**.
 

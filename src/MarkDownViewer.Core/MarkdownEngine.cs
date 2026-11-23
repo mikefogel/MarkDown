@@ -155,7 +155,7 @@ public sealed partial class MarkdownEngine
                     else if (included is not null && r.Kind == LinkKind.Markdown && included.TryGetValue(r.Path, out var idx))
                     {
                         link.Url = $"#d{idx}" + (r.Fragment is null ? "" : "-" + Uri.EscapeDataString(r.Fragment));
-                        attrs.AddProperty("data-target", $"siehe Abschnitt {idx + 1}");
+                        attrs.AddProperty("data-target", $"→ Abschnitt {idx + 1}");
                     }
                     else
                     {
