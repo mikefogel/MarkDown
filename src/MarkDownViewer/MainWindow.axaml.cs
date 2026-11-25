@@ -327,14 +327,8 @@ public partial class MainWindow : Window
         if (string.IsNullOrEmpty(q)) return;
         if (TreeSearchBox.IsChecked == true)
         {
-            var files = _treeDocs.Select(d => d.Path).ToList();
-            if (files.Count == 0 && _history.Current is not null) files.Add(_history.Current.Path);
-            var hits = await Task.Run(() => TreeSearch.Search(files, q));
-            SearchResults.ItemsSource = hits.Select(h => new ListBoxItem
-            {
-                Content = $"{Path.GetFileName(h.Path)}:{h.Line}  {Truncate(h.Snippet, 90)}",
-                Tag = h.Path
-            }).ToList();
+            TreeQueryBox.Text = q;
+            await TreeSearchAsync(q);
             Sidebar.SelectedItem = SearchTab;
             if (!Sidebar.IsVisible) OnToggleSidebar(null, new RoutedEventArgs());
         }
@@ -342,6 +336,31 @@ public partial class MainWindow : Window
         {
             await FindAsync(q, backwards);
         }
+    }
+
+    private async void OnTreeQueryKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Enter) return;
+        e.Handled = true;
+        await TreeSearchAsync(TreeQueryBox.Text?.Trim());
+    }
+
+    private async Task TreeSearchAsync(string? q)
+    {
+        SearchResults.ItemsSource = null;
+        if (string.IsNullOrEmpty(q)) { TreeSearchStatus.Text = ""; return; }
+        var files = _treeDocs.Select(d => d.Path).ToList();
+        if (files.Count == 0 && _history.Current is not null) files.Add(_history.Current.Path);
+        if (files.Count == 0) { TreeSearchStatus.Text = "Kein Dokument geöffnet."; return; }
+        var hits = await Task.Run(() => TreeSearch.Search(files, q));
+        SearchResults.ItemsSource = hits.Select(h => new ListBoxItem
+        {
+            Content = $"{Path.GetFileName(h.Path)}:{h.Line}  {Truncate(h.Snippet, 90)}",
+            Tag = h.Path
+        }).ToList();
+        TreeSearchStatus.Text = hits.Count == 0
+            ? $"Keine Treffer in {files.Count} Dokument(en)."
+            : $"{hits.Count} Treffer in {files.Count} Dokument(en).";
     }
 
     private async Task FindAsync(string q, bool backwards)
@@ -353,7 +372,8 @@ public partial class MainWindow : Window
     private async void OnSearchResultSelected(object? sender, SelectionChangedEventArgs e)
     {
         if (SearchResults.SelectedItem is not ListBoxItem { Tag: string path }) return;
-        var q = SearchBox.Text?.Trim();
+        var q = TreeQueryBox.Text?.Trim();
+        if (string.IsNullOrEmpty(q)) q = SearchBox.Text?.Trim();
         if (string.Equals(_history.Current?.Path, path, StringComparison.Ordinal) && _history.Current?.Mode == ViewMode.Normal)
         {
             if (!string.IsNullOrEmpty(q)) await FindAsync(q, false);

@@ -32,7 +32,11 @@
           <TreeView x:Name="DocTree" SelectionChanged="OnDocTreeSelected" />
         </TabItem>
         <TabItem x:Name="SearchTab" Header="Suche" FontSize="13">
-          <ListBox x:Name="SearchResults" SelectionChanged="OnSearchResultSelected" />
+          <DockPanel>
+            <TextBox x:Name="TreeQueryBox" DockPanel.Dock="Top" Margin="6" Watermark="Im ganzen Baum suchen (Enter)" KeyDown="OnTreeQueryKeyDown" />
+            <TextBlock x:Name="TreeSearchStatus" DockPanel.Dock="Top" Margin="8,0,8,6" Opacity="0.7" FontSize="12" />
+            <ListBox x:Name="SearchResults" SelectionChanged="OnSearchResultSelected" />
+          </DockPanel>
         </TabItem>
       </TabControl>
       <GridSplitter x:Name="Splitter" Grid.Column="1" Width="5" />
